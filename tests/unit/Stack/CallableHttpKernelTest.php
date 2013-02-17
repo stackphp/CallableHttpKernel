@@ -18,7 +18,7 @@ class CallableHttpKernelTest extends \PHPUnit_Framework_TestCase
         $response = $kernel->handle($request);
 
         $this->assertSame('ok', $response->getContent());
-        $this->assertCount(1, $spy);
+        $this->assertSame(1, $spy->getCount());
         $this->assertSame(
             [$request, HttpKernelInterface::MASTER_REQUEST, true],
             $spy->getCall(0)
@@ -35,7 +35,7 @@ class CallableHttpKernelTest extends \PHPUnit_Framework_TestCase
         $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST, false);
 
         $this->assertSame('ok', $response->getContent());
-        $this->assertCount(1, $spy);
+        $this->assertSame(1, $spy->getCount());
         $this->assertSame(
             [$request, HttpKernelInterface::SUB_REQUEST, false],
             $spy->getCall(0)
@@ -43,7 +43,7 @@ class CallableHttpKernelTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class SpyCallable implements \Countable
+class SpyCallable
 {
     private $returnValue;
     private $calls = [];
@@ -60,7 +60,7 @@ class SpyCallable implements \Countable
         return $this->returnValue;
     }
 
-    public function count()
+    public function getCount()
     {
         return count($this->calls);
     }
