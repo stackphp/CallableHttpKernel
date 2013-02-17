@@ -7,6 +7,7 @@ HttpKernelInterface on the fly.
 
 ## Example
 
+    use Stack\CallableHttpKernel;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
 
