@@ -36,6 +36,19 @@ class BasicTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Response('2'), $response);
     }
 
+    /**
+     * @expectedException UnexpectedValueException
+     * @test
+     */
+    public function nonResponseReturnValueShouldThrowException()
+    {
+        $kernel = new CallableHttpKernel(function (Request $request) {
+            return 'foo';
+        });
+
+        $kernel->handle(Request::create('/'));
+    }
+
     public function provideRequests()
     {
         return [
