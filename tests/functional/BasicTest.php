@@ -51,14 +51,14 @@ class BasicTest extends \PHPUnit_Framework_TestCase
 
     public function provideRequests()
     {
-        return [
-            [Request::create('/')],
-            [Request::create('/foo')],
-            [Request::create('/foo/bar/baz?qux=quux')],
-            [Request::create('/', 'POST')],
-            [Request::create('/', 'PUT')],
-            [Request::create('/', 'DELETE')],
-            [Request::create('/foo?wat=wob', 'POST')],
-        ];
+        return array(
+            array(Request::create('/')),
+            array(Request::create('/foo')),
+            array(Request::create('/foo/bar/baz?qux=quux')),
+            array(Request::create('/', 'POST')),
+            array(Request::create('/', 'PUT')),
+            array(Request::create('/', 'DELETE')),
+            array(Request::create('/foo?wat=wob', 'POST')),
+        );
     }
 }
