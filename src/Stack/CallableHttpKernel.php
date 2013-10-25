@@ -10,8 +10,12 @@ class CallableHttpKernel implements HttpKernelInterface
 {
     private $callable;
 
-    public function __construct(callable $callable)
+    public function __construct($callable)
     {
+        if (!is_callable($callable)) {
+            throw new \InvalidArgumentException('Invalid callable passed to CallableHttpKernel::__construct().');
+        }
+
         $this->callable = $callable;
     }
 
