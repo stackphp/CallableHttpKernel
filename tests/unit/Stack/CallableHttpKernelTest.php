@@ -9,36 +9,45 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class CallableHttpKernelTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function handleShouldDelegateToCallable()
+    public function handleAndTerminateShouldDelegateToCallable()
     {
-        $spy = new SpyCallable(new Response('ok'));
-        $kernel = new CallableHttpKernel($spy);
+        $handleSpy = new SpyCallable(new Response('ok'));
+        $terminateSpy = new SpyCallable(null);
+        $kernel = new CallableHttpKernel($handleSpy, $terminateSpy);
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
 
         $this->assertSame('ok', $response->getContent());
-        $this->assertSame(1, $spy->getCount());
+        $this->assertSame(1, $handleSpy->getCount());
         $this->assertSame(
             array($request, HttpKernelInterface::MASTER_REQUEST, true),
-            $spy->getCall(0)
+            $handleSpy->getCall(0)
+        );
+
+        $kernel->terminate($request, $response);
+
+        $this->assertSame(1, $terminateSpy->getCount());
+        $this->assertSame(
+            array($request, $response),
+            $terminateSpy->getCall(0)
         );
     }
 
     /** @test */
     public function handleShouldDelegateAllArgs()
     {
-        $spy = new SpyCallable(new Response('ok'));
-        $kernel = new CallableHttpKernel($spy);
+        $handleSpy = new SpyCallable(new Response('ok'));
+        $kernel = new CallableHttpKernel($handleSpy);
 
         $request = Request::create('/');
         $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST, false);
 
         $this->assertSame('ok', $response->getContent());
-        $this->assertSame(1, $spy->getCount());
+        $this->assertSame(1, $handleSpy->getCount());
         $this->assertSame(
             array($request, HttpKernelInterface::SUB_REQUEST, false),
-            $spy->getCall(0)
+            $handleSpy->getCall(0)
         );
     }
 }
