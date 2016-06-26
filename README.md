@@ -7,10 +7,12 @@ HttpKernelInterface on the fly.
 
 ## Example
 
-    use Stack\CallableHttpKernel;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
+```php
+use Stack\CallableHttpKernel;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-    $app = new CallableHttpKernel(function (Request $request) {
-        return new Response('Hello World!');
-    });
+$app = new CallableHttpKernel(function (Request $request) {
+    return new Response('Hello World!');
+});
+```
