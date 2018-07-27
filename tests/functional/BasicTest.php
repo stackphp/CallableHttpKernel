@@ -6,7 +6,7 @@ use Stack\CallableHttpKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BasicTest extends \PHPUnit_Framework_TestCase
+class BasicTest extends \PHPUnit\Framework\TestCase
 {
     /** @dataProvider provideRequests */
     public function testHelloWorld(Request $request)

@@ -12,8 +12,10 @@ php:
 
 before_script:
   - composer install --no-interaction --prefer-source
+  - composer require --dev phpunit/phpunit
 
-script: phpunit --coverage-text
+script:
+  - ./vendor/bin/phpunit --coverage-text
 
 matrix:
   allow_failures:
