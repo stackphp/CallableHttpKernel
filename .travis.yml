@@ -11,7 +11,7 @@ php:
   - hhvm
 
 before_script:
-  - composer install --no-interaction -prefer-source
+  - composer install --no-interaction --prefer-source
 
 script: phpunit --coverage-text
 
